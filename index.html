@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat to N8N</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    #chat { max-width: 600px; margin: auto; }
+    #messages { border: 1px solid #ccc; padding: 1em; height: 300px; overflow-y: scroll; }
+    #input { margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <div id="chat">
+    <h2>Chat with Us</h2>
+    <div id="messages"></div>
+    <div id="input">
+      <input type="text" id="msg" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById('msg').value;
+      if (!msg) return;
+      document.getElementById('messages').innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
+      document.getElementById('msg').value = '';
+
+      // Replace with your actual N8N webhook URL
+      const webhookUrl = "https://your-n8n-domain.com/webhook/chat";
+
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      });
+    }
+  </script>
+</body>
+</html>
