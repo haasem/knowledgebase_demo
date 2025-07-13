@@ -3,20 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Widget</title>
+    <title>Hilarious Machines - Knowledge Base Demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/geist-font/1.0.0/fonts/geist-sans/style.min.css">
     <style>
-        body {
-            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: transparent;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;
-            height: 100vh;
-            overflow: hidden;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #0f0f0f;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* Left Content */
+        .hero-content {
+            color: #fff;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: #a0a0a0;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .github-link:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        /* Right Content - Chat Demo */
+        .chat-demo {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+        }
+
+        .chat-demo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .chat-demo h3 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .chat-instruction {
+            color: #a0a0a0;
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        .chat-highlight {
+            background: linear-gradient(135deg, #854fff, #6b3fd4);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .chat-highlight h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .chat-highlight p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-arrow {
+            position: absolute;
+            bottom: -12px;
+            right: 24px;
+            color: #854fff;
+            font-size: 24px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
         /* Chat Widget Styling */
         #chat-widget-container {
             position: fixed;
@@ -24,59 +191,123 @@
             right: 20px;
             width: 350px;
             height: 500px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             display: none;
             flex-direction: column;
             z-index: 1000;
             overflow: hidden;
+            backdrop-filter: blur(20px);
         }
+
         #chat-widget-header {
             background: #854fff;
             color: white;
             padding: 20px;
-            font-weight: bold;
+            font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 18px;
+            font-size: 16px;
         }
+
+        #chat-widget-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        #chat-widget-header button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         #chat-widget-body {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            background: #1a1a1a;
         }
-        /* Increased spacing between messages */
+
         #chat-widget-body p {
-            margin-bottom: 15px; /* Adjust spacing between messages */
-            padding: 12px;
-            border-radius: 8px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
             font-size: 14px;
             word-wrap: break-word;
+            max-width: 85%;
         }
+
+        .user-message {
+            background: #854fff !important;
+            color: white !important;
+            margin-left: auto !important;
+            border-bottom-right-radius: 4px !important;
+        }
+
+        .bot-message {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+            border-bottom-left-radius: 4px !important;
+        }
+
         #chat-widget-footer {
-            padding: 12px;
-            border-top: 1px solid #ddd;
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            background: #1a1a1a;
         }
+
         #chat-widget-input {
             flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             outline: none;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 14px;
         }
+
+        #chat-widget-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        #chat-widget-input:focus {
+            border-color: #854fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         #chat-widget-send {
             background: #854fff;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
         }
-        /* Make the chat bubble a perfect circle */
+
+        #chat-widget-send:hover {
+            background: #6b3fd4;
+            transform: translateY(-1px);
+        }
+
         #chat-widget-button {
             position: fixed;
             bottom: 20px;
@@ -84,20 +315,124 @@
             background: #854fff;
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 24px;
             z-index: 1001;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(133, 79, 255, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse-button 4s infinite;
+        }
+
+        #chat-widget-button:hover {
+            background: #6b3fd4;
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(133, 79, 255, 0.6);
+        }
+
+        @keyframes pulse-button {
+            0%, 100% { 
+                box-shadow: 0 4px 20px rgba(133, 79, 255, 0.4);
+            }
+            50% { 
+                box-shadow: 0 4px 20px rgba(133, 79, 255, 0.8), 0 0 0 12px rgba(133, 79, 255, 0.1);
+            }
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .main-container {
+                padding: 20px;
+            }
+            
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            #chat-widget-container {
+                width: 300px;
+                height: 450px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">🤖 Hilarious Machines</a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="content-wrapper">
+            <!-- Left Content -->
+            <div class="hero-content">
+                <h1>AI Knowledge Base Demo</h1>
+                <p>Test our intelligent knowledge base implementation powered by an AI Support Agent running in N8N, with Google Drive storage and Supabase vectorized indexing for semantic search.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-item">N8N Workflows</span>
+                    <span class="tech-item">Google Drive</span>
+                    <span class="tech-item">Supabase Vector DB</span>
+                    <span class="tech-item">AI Agent</span>
+                </div>
+
+                <a href="https://github.com/haasem/knowledgebase_demo" class="github-link" target="_blank">
+                    <span>📚</span>
+                    View technical documentation
+                </a>
+            </div>
+
+            <!-- Right Content -->
+            <div class="chat-demo">
+                <h3>Live Demo</h3>
+                <p class="chat-instruction">Ask questions and get intelligent responses from our knowledge base</p>
+                
+                <div class="chat-highlight">
+                    <h4>💬 Click the chat button to start</h4>
+                    <p>Try: "What services do you offer?" or "How does this work?"</p>
+                    <div class="chat-arrow">↘️</div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Chat Widget Button -->
     <button id="chat-widget-button">💬</button>
@@ -105,14 +440,17 @@
     <!-- Chat Widget -->
     <div id="chat-widget-container">
         <div id="chat-widget-header">
-            <span>Chat</span>
+            <span>💬 Knowledge Base Chat</span>
             <button onclick="closeChatWidget()">✖</button>
         </div>
         <div id="chat-widget-body">
-            <p style="margin-bottom: 20px;"><strong>Hi 👋, how can we help?</strong></p>
+            <p class="bot-message">
+                <strong>👋 Hello!</strong><br>
+                I'm your AI assistant. Ask me anything about our services or how this system works!
+            </p>
         </div>
         <div id="chat-widget-footer">
-            <input type="text" id="chat-widget-input" placeholder="Type your message here...">
+            <input type="text" id="chat-widget-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
             <button id="chat-widget-send">Send</button>
         </div>
     </div>
@@ -128,70 +466,103 @@
                 primaryColor: '#854fff',
                 secondaryColor: '#6b3fd4',
                 position: 'right',
-                backgroundColor: '#ffffff',
-                fontColor: '#333333'
+                backgroundColor: '#1a1a1a',
+                fontColor: '#ffffff'
             }
         };
 
-        // Function to generate or retrieve a unique chat ID
         function getChatId() {
             let chatId = sessionStorage.getItem("chatId");
             if (!chatId) {
-                chatId = "chat_" + Math.random().toString(36).substr(2, 9); // Unique ID
+                chatId = "chat_" + Math.random().toString(36).substr(2, 9);
                 sessionStorage.setItem("chatId", chatId);
             }
             return chatId;
         }
 
-        // Show chat widget and hide bubble
         document.getElementById("chat-widget-button").addEventListener("click", function() {
             document.getElementById("chat-widget-container").style.display = "flex";
             document.getElementById("chat-widget-button").style.display = "none";
         });
 
-        // Close chat widget and show bubble
         function closeChatWidget() {
             document.getElementById("chat-widget-container").style.display = "none";
             document.getElementById("chat-widget-button").style.display = "flex";
         }
 
-        // Send message to n8n webhook
-        document.getElementById("chat-widget-send").addEventListener("click", function() {
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
             let message = document.getElementById("chat-widget-input").value;
             if (message.trim() === "") return;
 
             let chatBody = document.getElementById("chat-widget-body");
             let newMessage = document.createElement("p");
             newMessage.textContent = message;
-            newMessage.style.color = "#333";
-            newMessage.style.background = "#f1f1f1";
+            newMessage.className = "user-message";
             chatBody.appendChild(newMessage);
 
-            let chatId = getChatId(); // Retrieve the session chat ID
+            let typingIndicator = document.createElement("p");
+            typingIndicator.innerHTML = "🤖 AI is typing...";
+            typingIndicator.className = "bot-message";
+            typingIndicator.style.fontStyle = "italic";
+            typingIndicator.style.opacity = "0.7";
+            typingIndicator.id = "typing-indicator";
+            chatBody.appendChild(typingIndicator);
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            let chatId = getChatId();
 
             fetch(window.ChatWidgetConfig.webhook.url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    chatId: chatId,  // Attach chat ID for memory tracking
+                    chatId: chatId,
                     message: message,
                     route: window.ChatWidgetConfig.webhook.route
                 })
             })
             .then(response => response.json())
             .then(data => {
+                const indicator = document.getElementById("typing-indicator");
+                if (indicator) {
+                    indicator.remove();
+                }
+
                 let botMessage = document.createElement("p");
-                botMessage.innerHTML = data.output || "Sorry, I couldn't understand that.";
-                botMessage.style.color = "#fff";
-                botMessage.style.background = "#854fff";
-                botMessage.style.marginTop = "10px";
+                botMessage.innerHTML = data.output || "Sorry, I couldn't understand that. Please try asking your question in a different way.";
+                botMessage.className = "bot-message";
                 chatBody.appendChild(botMessage);
+
+                chatBody.scrollTop = chatBody.scrollHeight;
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                console.error("Error:", error);
+                
+                const indicator = document.getElementById("typing-indicator");
+                if (indicator) {
+                    indicator.remove();
+                }
+
+                let errorMessage = document.createElement("p");
+                errorMessage.innerHTML = "Sorry, there was an error. Please try again.";
+                errorMessage.className = "bot-message";
+                errorMessage.style.background = "rgba(255, 107, 107, 0.2)";
+                errorMessage.style.borderLeft = "3px solid #ff6b6b";
+                chatBody.appendChild(errorMessage);
+
+                chatBody.scrollTop = chatBody.scrollHeight;
+            });
 
             document.getElementById("chat-widget-input").value = "";
-        });
-    </script>
+        }
 
+        document.getElementById("chat-widget-send").addEventListener("click", sendMessage);
+    </script>
 </body>
 </html>
