@@ -1,22 +1,24 @@
-## N8N Knowledge Base Workflow - Technical Documentation
+# N8N Knowledge Base Workflow - Technical Documentation
 
-# Overview
+## Production Test
+[Test Knowledge Base](https://haasem.github.io/knowledgebase_demo/index.html)
+
+## Overview
 This N8N workflow implements an intelligent knowledge base system that combines Google Drive document storage, Supabase vector database for semantic search, and an AI-powered chat agent. The system automatically processes documents, maintains a searchable knowledge base, and provides conversational access to information through a sophisticated AI agent.
 Architecture Components
 Core Technologies
 
-N8N: Workflow automation and orchestration
+## N8N: Workflow automation and orchestration
 Google Drive: Document storage and file management
 Supabase: Vector database for document indexing and semantic search
 OpenAI: Embeddings generation and language model
 LangChain: AI agent framework and document processing
 
-Workflow Breakdown
-1. Chat Interface (Query Processing)
+## Workflow Breakdown
+### 1. Chat Interface (Query Processing)
 Trigger: When chat message received
 
 Type: Chat Trigger (Webhook)
-Webhook ID: 267dc789-8813-441a-93bf-43fcf6541c5f
 Function: Receives incoming chat messages from the web interface
 Configuration: Public webhook accepting chat input
 
@@ -44,7 +46,7 @@ Description: "Call this tool to retrieve information from the knowledge base acc
 Table: documents
 Integration: Connected to OpenAI embeddings (1536 dimensions)
 
-2. Document Ingestion Pipeline
+### 2. Document Ingestion Pipeline
 New Document Trigger: New Doc Trigger
 
 Type: Google Drive Trigger
@@ -84,7 +86,7 @@ Function: Stores document content, embeddings, and metadata
 
 
 
-3. Document Update Management
+### 3. Document Update Management
 Update Detection: Google Drive Trigger1
 
 Watch Folder: Same KnowledgeBase folder
@@ -115,7 +117,7 @@ Result: Fresh embeddings and content in database
 
 
 
-4. Document Deletion Management
+### 4. Document Deletion Management
 Deletion Detection: Google Drive Trigger2
 
 Watch Folder: Recycle Bin (1ie3H_WHv5AHlKpgMnpga5SabDfiByL6j)
@@ -133,7 +135,7 @@ Function: Maintains database consistency
 
 
 
-Data Flow Architecture
+## Data Flow Architecture
 Document Ingestion Flow
 Google Drive (New File) 
     ↓
@@ -176,7 +178,7 @@ Embeddings: n8n free OpenAI API credits
 
 
 
-Database Schema
+## Database Schema
 Supabase Table: documents
 
 Content: Document text content
@@ -236,6 +238,3 @@ API Rate Limiting: Distributed across multiple OpenAI accounts
 Folder Organization: Structured Google Drive hierarchy
 
 This workflow represents a production-ready knowledge base system that automatically maintains synchronization between document storage and a searchable AI-powered interface, providing intelligent responses based on current document content.
-
-
-[Test Knowledge Base](https://haasem.github.io/knowledgebase_demo/index.html)
