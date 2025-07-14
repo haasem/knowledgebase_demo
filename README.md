@@ -2,6 +2,9 @@
 
 ## Production Test: [Test Knowledge Base](https://haasem.github.io/knowledgebase_demo/index.html)
 
+<img width="1079" height="464" alt="image" src="https://github.com/user-attachments/assets/0f115d26-0899-45ae-9bdd-ab2d4e927b9e" />
+
+
 ## Overview
 This N8N workflow implements an intelligent knowledge base system that combines Google Drive document storage, Supabase vector database for semantic search, and an AI-powered chat agent. The system automatically processes documents, maintains a searchable knowledge base, and provides conversational access to information through a sophisticated AI agent.
 Architecture Components
