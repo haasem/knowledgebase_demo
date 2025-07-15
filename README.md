@@ -1,4 +1,4 @@
-# N8N Knowledge Base Workflow - Technical Documentation
+# N8N AI Service Agent - Knowledge Base Workflow - Technical Documentation
 
 ## Production Test: [Test Knowledge Base](https://haasem.github.io/knowledgebase_demo/index.html)
 
